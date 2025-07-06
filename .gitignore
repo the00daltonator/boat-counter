@@ -21,16 +21,16 @@ wheels/
 *.egg
 MANIFEST
 
-# PyTorch/YOLO model files (too large for git)
-*.pt
-*.pth
-*.weights
+# PyTorch/YOLO model files (tracked with Git LFS)
+# *.pt
+# *.pth
+# *.weights
 
-# Video files (too large for git)
-*.mp4
-*.avi
-*.mov
-*.mkv
+# Video files (tracked with Git LFS)
+# *.mp4
+# *.avi
+# *.mov
+# *.mkv
 
 # IDE
 .vscode/
