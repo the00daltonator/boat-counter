@@ -14,7 +14,7 @@ VIDEO_SOURCE = "test_boats.mp4"  # Path to your boat video
 MODEL_PATH = "yolov8n.pt"
 CLASS_FILTER = "boat"
 CONFIDENCE_THRESHOLD = 0.3
-COUNT_LINE = [100, 300, 500, 300]  # Adjust based on your video frame
+COUNT_LINE = [640 // 2, 150, 640 // 2, 350]  # Vertical line down the center of a 640px-wide frame
 
 # === INITIALIZATION ===
 print("[DEBUG] Loading video...")
@@ -63,7 +63,7 @@ while True:
         cx, cy = x1 + w // 2, y1 + h // 2
 
         # Check crossing line
-        if COUNT_LINE[0] < cx < COUNT_LINE[2] and COUNT_LINE[1] - 15 < cy < COUNT_LINE[1] + 15:
+        if COUNT_LINE[1] < cy < COUNT_LINE[3] and COUNT_LINE[0] - 15 < cx < COUNT_LINE[0] + 15:
             if id not in totalCount:
                 totalCount.append(id)
                 print(f"[DEBUG] Boat #{int(id)} counted at {datetime.now().strftime('%H:%M:%S')}")
