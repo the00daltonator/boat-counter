@@ -57,4 +57,18 @@ env.bak/
 venv.bak/
 
 # Logs
-*.log 
+*.log
+
+# Testing
+.pytest_cache/
+.coverage
+coverage-report/
+tests/data/*.mp4
+htmlcov/
+
+# Application generated files
+snapshots/
+*.DEC.yaml
+
+# Mypy
+.mypy_cache/ 
