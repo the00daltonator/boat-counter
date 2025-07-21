@@ -8,67 +8,68 @@ A computer vision application that detects and counts boats in video streams usi
 - Object tracking with SORT algorithm
 - Line crossing detection for counting
 - Visual debugging with bounding boxes and tracking IDs
-- Support for video file processing
+- Optional Google Sheets integration for logging
+- Optional region-of-interest masking
 
-## Requirements
+## Setup & Usage
 
-- Python 3.7+
-- OpenCV
-- Ultralytics (YOLOv8)
-- NumPy
+The project uses a Makefile for all operations. After cloning the repository:
 
-## Installation
-
-1. Clone this repository:
 ```bash
-git clone <your-repo-url>
-cd boat-counter
+# Setup environment and install all dependencies
+make setup
+
+# Run the application with default settings
+make run
+
+# Run all tests
+make test
+
+# Run tests with coverage report
+make coverage
+
+# Clean up build artifacts and virtual environment
+make clean
 ```
 
-2. Install dependencies:
+The first run will automatically download the YOLOv8 model.
+
+## Command Line Options
+
+When not using the Makefile, you can run directly with options:
+
 ```bash
-pip install ultralytics opencv-python numpy
+python boat_counter.py --source video.mp4 --display
 ```
 
-3. Download the YOLOv8 model:
-```bash
-# The yolov8n.pt file should be downloaded automatically by ultralytics
-# or you can download it manually from the Ultralytics repository
+Common options:
+- `--source`: Video source (0=webcam, path to video file, rtsp URL)
+- `--display`: Enable visual display
+- `--confidence`: Detection confidence threshold (0.0-1.0)
+- `--line`: Counting line coordinates [x1 y1 x2 y2]
+
+## Project Structure
+
+```
+boat-counter/
+├── boat_counter.py    # Main application module
+├── sort.py            # SORT tracking algorithm
+├── requirements.txt   # Dependencies
+├── Makefile           # Build automation
+└── tests/             # Test suite
 ```
 
-## Usage
+## Troubleshooting
 
-1. Place your video file in the project directory
-2. Update the `VIDEO_SOURCE` variable in `boat_counter_video_test.py` to point to your video file
-3. Adjust the `COUNT_LINE` coordinates to match your video's perspective
-4. Run the script:
-```bash
-python boat_counter_video_test.py
-```
+If you encounter issues:
 
-## Configuration
+1. **Dependencies**: Run `make clean` followed by `make setup` to reset the environment
+2. **Video source**: Ensure video files exist or webcam is connected
+3. **Model download**: The model downloads automatically, but can be manually downloaded from Ultralytics
 
-Key parameters in `boat_counter_video_test.py`:
+## Advanced: Google Sheets Integration
 
-- `VIDEO_SOURCE`: Path to your video file
-- `MODEL_PATH`: Path to YOLO model file
-- `CLASS_FILTER`: Object class to detect ("boat")
-- `CONFIDENCE_THRESHOLD`: Minimum confidence for detection (0.3)
-- `COUNT_LINE`: Line coordinates for counting [x1, y1, x2, y2]
+To enable Google Sheets logging:
 
-## Files
-
-- `boat_counter_video_test.py`: Main boat detection and counting script
-- `sort.py`: SORT tracking algorithm implementation
-- `test_boats.mp4`: Sample video file (not included in repo due to size)
-- `yolov8n.pt`: YOLOv8 model file (not included in repo due to size)
-
-## Notes
-
-- Large files (video files and model files) are excluded from this repository
-- You'll need to download the YOLOv8 model separately or let ultralytics handle it automatically
-- The SORT tracker helps maintain consistent object IDs across frames
-
-## License
-
-[Add your license here] 
+1. Obtain a Google API service account credentials file
+2. Run with: `python boat_counter.py --gsheets --gsheets-creds credentials.json` 

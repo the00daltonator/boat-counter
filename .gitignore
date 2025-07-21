@@ -21,16 +21,16 @@ wheels/
 *.egg
 MANIFEST
 
-# PyTorch/YOLO model files (tracked with Git LFS)
-# *.pt
-# *.pth
-# *.weights
+# PyTorch/YOLO model files
+*.pt
+*.pth
+*.weights
 
-# Video files (tracked with Git LFS)
-# *.mp4
-# *.avi
-# *.mov
-# *.mkv
+# Video files
+*.mp4
+*.avi
+*.mov
+*.mkv
 
 # IDE
 .vscode/
@@ -57,4 +57,18 @@ env.bak/
 venv.bak/
 
 # Logs
-*.log 
+*.log
+
+# Testing
+.pytest_cache/
+.coverage
+coverage-report/
+tests/data/*.mp4
+htmlcov/
+
+# Application generated files
+snapshots/
+*.DEC.yaml
+
+# Mypy
+.mypy_cache/ 
