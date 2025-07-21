@@ -62,4 +62,4 @@ clean:
 
 run: setup
 	@echo "Running Boat Counter..."
-	@$(PYTHON_VENV) boat_counter.py --display 
+	@$(PYTHON_VENV) boat_counter.py --display --snapshots snapshots
