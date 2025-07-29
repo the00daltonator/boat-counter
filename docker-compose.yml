@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  boat-counter:
+    build: .
+    container_name: boat-counter
+    volumes:
+      # Mount video files directory
+      - ./videos:/app/videos:ro
+      # Mount snapshots directory for persistent storage
+      - ./snapshots:/app/snapshots
+      # Mount credentials if using Google Sheets
+      - ./credentials:/app/credentials:ro
+      # X11 socket for display (Linux)
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    devices:
+      # Mount camera device if available
+      - /dev/video0:/dev/video0
+    network_mode: host
+    privileged: true
+    restart: unless-stopped
+    command: ["python", "boat_counter.py", "--source", "0", "--display"] 

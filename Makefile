@@ -11,7 +11,7 @@ SRC_DIR = .
 TEST_DIR = tests
 COV_REPORT_DIR = coverage-report
 
-.PHONY: all setup clean test lint coverage run help
+.PHONY: all setup clean test lint coverage run help docker-build docker-run docker-stop docker-camera
 
 all: help
 
@@ -23,6 +23,12 @@ help:
 	@echo "  lint         Run linting checks"
 	@echo "  clean        Remove build artifacts and temporary files"
 	@echo "  run          Run the boat counter with default settings"
+	@echo ""
+	@echo "Docker Commands:"
+	@echo "  docker-build Build the Docker image"
+	@echo "  docker-run   Run the boat counter in Docker"
+	@echo "  docker-stop  Stop the Docker container"
+	@echo "  docker-camera Run with camera access"
 
 setup: $(VENV)/bin/activate
 
@@ -62,4 +68,25 @@ clean:
 
 run: setup
 	@echo "Running Boat Counter..."
-	@$(PYTHON_VENV) boat_counter.py --display --snapshots snapshots
+	@$(PYTHON_VENV) boat_counter.py --display
+
+# Docker commands
+docker-build:
+	@echo "Building Docker image..."
+	@docker build -t boat-counter .
+
+docker-run:
+	@echo "Running boat counter in Docker..."
+	@docker-compose up
+
+docker-stop:
+	@echo "Stopping Docker container..."
+	@docker-compose down
+
+docker-camera:
+	@echo "Running boat counter with camera access..."
+	@./run-camera.sh
+
+docker-run-video:
+	@echo "Running boat counter with video file in Docker..."
+	@docker run -it --rm -v $(PWD)/videos:/app/videos boat-counter python boat_counter.py --source /app/videos/$(VIDEO_FILE) --display

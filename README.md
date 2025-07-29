@@ -13,6 +13,8 @@ A computer vision application that detects and counts boats in video streams usi
 
 ## Setup & Usage
 
+### Option 1: Local Development (Makefile)
+
 The project uses a Makefile for all operations. After cloning the repository:
 
 ```bash
@@ -30,6 +32,24 @@ make coverage
 
 # Clean up build artifacts and virtual environment
 make clean
+```
+
+### Option 2: Docker
+
+For consistent deployment across environments:
+
+```bash
+# Build the Docker image
+make docker-build
+
+# Run with webcam
+make docker-run
+
+# Stop the container
+make docker-stop
+
+# Run with a specific video file
+make docker-run-video VIDEO_FILE=your_video.mp4
 ```
 
 The first run will automatically download the YOLOv8 model.
@@ -56,6 +76,8 @@ boat-counter/
 ├── sort.py            # SORT tracking algorithm
 ├── requirements.txt   # Dependencies
 ├── Makefile           # Build automation
+├── Dockerfile         # Docker configuration
+├── docker-compose.yml # Docker orchestration
 └── tests/             # Test suite
 ```
 
@@ -66,6 +88,7 @@ If you encounter issues:
 1. **Dependencies**: Run `make clean` followed by `make setup` to reset the environment
 2. **Video source**: Ensure video files exist or webcam is connected
 3. **Model download**: The model downloads automatically, but can be manually downloaded from Ultralytics
+4. **Docker issues**: Ensure Docker and docker-compose are installed and running
 
 ## Advanced: Google Sheets Integration
 
